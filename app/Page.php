@@ -18,6 +18,16 @@ class Page extends Model
     }
 
     /**
+     * The ads on the page
+     * 
+     * @return [type] [description]
+     */
+    public function ads()
+    {
+        return $this->belongsToMany('App\Ad');
+    }
+
+    /**
      * The rooute key for this model
      * 
      * @return [type] [description]

@@ -66,7 +66,7 @@ class Processor
 			return $this->updateContent();
 		
 		// this content is up to date so return it
-		return $this->content;
+		return $this->content->content;
 	}
 
 	/**
@@ -80,15 +80,18 @@ class Processor
 		// process the link and get content
 		$process = new Process($this->page->link);
 		$result = $process->dispatch();
-
-		return $result;
-
+		
 		// store the content in the database
 		$content = new Content;
-		$content->content = $result;
+		$content->content = mb_convert_encoding($result['content'], 'HTML-ENTITIES', "UTF-8");;
 
 		try
 		{
+			// store the page title
+			$this->page->title = $result['title'];
+			$this->page->save();
+
+			// store the content
 			$this->page->content()->save($content);
 		}
 		catch (\Exception $e)
@@ -97,7 +100,7 @@ class Processor
 		}
 
 		// return the gotten content
-		return $result;
+		return $result['content'];
 	}
 
 	/**
@@ -113,11 +116,15 @@ class Processor
 		$result = $process->dispatch();
 
 		// store the content in the database
-		$this->content->content = $result;
+		$this->content->content = $result['content'];
 		$this->content->save();
 
+		// store the title of the page
+		$this->page->title = $result['title'];
+		$this->page->save();
+
 		// return the gotten content
-		return $result;
+		return $result['content'];
 	}
 
 }

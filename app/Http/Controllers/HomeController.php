@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Ad;
+use App\Page;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +25,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $pages = Page::latest()->get()->take(10);
+
+        $ads = Ad::all()->take(10);
+
+        $with = ['pages' => $pages, 'ads' => $ads];
+
+        return view('home', $with);
     }
 }

@@ -8,12 +8,25 @@ use App\Processors\Processor;
 
 class ContentController extends Controller
 {
-    //
+    /**
+     * get the page's content
+     * 
+     * @param  Page   $page [description]
+     * @return [type]       [description]
+     */
     public function getPage(Page $page)
     {
-    	return (new Processor($page))->process();
+    	(new Processor($page))->process();
+
+        return redirect("/f/{$page->slug}");
     }
 
+    /**
+     * Process a link request
+     * 
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
     public function processLink(Request $request)
     {
     	$exists = Page::where('link', $request->url)->first();
@@ -28,5 +41,16 @@ class ContentController extends Controller
     	$page->save();
 
     	return redirect("/{$page->slug}");
+    }
+
+    /**
+     * Show a frame page
+     * 
+     * @param  Page   $page [description]
+     * @return [type]       [description]
+     */
+    public function framePage(Page $page)
+    {
+        return view('frame', compact('page'));
     }
 }

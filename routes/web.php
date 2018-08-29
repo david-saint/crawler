@@ -11,10 +11,16 @@
 |
 */
 
-Route::get('/link', 'ContentController@processLink');
-
-Route::get('/{page}', 'ContentController@getPage');
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/link', 'ContentController@processLink');
+
+Route::resource('/pages', 'PageController');
+
+Route::resource('/ads', 'PageController');
+
+Route::get('/f/{page}', 'ContentController@framePage');
+
+Route::get('/{page}', 'ContentController@getPage');
