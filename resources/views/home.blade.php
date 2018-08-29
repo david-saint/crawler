@@ -119,10 +119,19 @@
                         <label for="recipient-name" class="col-form-label">Name:</label>
                         <input type="url" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" id="recipient-name" required>
                     </div>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="inputGroup" aria-describedby="inputGroupAddon">
+                            <label for="inputGroup" class="custom-file-label"></label>
+                        </div>
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="button" id="inputGroupAddon">File</button>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Add Link</button>
+                    <button type="submit" class="btn btn-primary">Add Ad</button>
                 </div>
             </form>
         </div>
