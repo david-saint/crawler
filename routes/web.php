@@ -19,7 +19,7 @@ Route::get('/link', 'ContentController@processLink');
 
 Route::resource('/pages', 'PageController');
 
-Route::resource('/ads', 'PageController');
+Route::resource('/ads', 'AdController');
 
 Route::get('/f/{page}', 'ContentController@framePage');
 

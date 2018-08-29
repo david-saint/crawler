@@ -16,9 +16,9 @@ class ContentController extends Controller
      */
     public function getPage(Page $page)
     {
-    	(new Processor($page))->process();
+    	return (new Processor($page))->process();
 
-        return redirect("/f/{$page->slug}");
+        // return redirect("/{$page->slug}");
     }
 
     /**
@@ -40,7 +40,7 @@ class ContentController extends Controller
 
     	$page->save();
 
-    	return redirect("/{$page->slug}");
+    	return redirect("/f/{$page->slug}");
     }
 
     /**

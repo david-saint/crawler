@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ad;
 use Illuminate\Http\Request;
 
 class AdController extends Controller
@@ -13,7 +14,9 @@ class AdController extends Controller
      */
     public function index()
     {
-        //
+        $ads = Ad::paginate(20);
+
+        return view('ads.index', compact('ads'));
     }
 
     /**

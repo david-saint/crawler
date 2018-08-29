@@ -41,6 +41,8 @@
                     <button type="submit" class="btn btn-primary">Edit Link</button>
                 </div>
             </form>
+            <br>
+            <p>Links: <a href="/{{ $page->slug }}">{{ url("/$page->slug") }}</a> OR <a href="/f/{{ $page->slug }}">{{ url("/f/$page->slug") }}</a></p>
         </div>
     </div>
 </div>

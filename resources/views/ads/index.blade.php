@@ -13,8 +13,8 @@
                         <li class="list-group-item d-flex justify-content-between align-items-center">
                             {{ $ad->name }}
                             <div>
-                                <a href="/pages/{{ $ad->id }}/edit"><span class="badge badge-primary badge-pill"><i class="material-icons">edit</i></span></a>
-                                <form action="/pages/{{ $ad->slug }}" method="POST" id="delete-{{ $ad->id }}-ad">
+                                <a href="/ads/{{ $ad->id }}/edit"><span class="badge badge-primary badge-pill"><i class="material-icons">edit</i></span></a>
+                                <form action="/ads/{{ $ad->slug }}" method="POST" id="delete-{{ $ad->id }}-ad">
                                     @method('DELETE')
                                     @csrf
                                 </form>
@@ -48,6 +48,32 @@
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Link:</label>
                         <input type="url" name="link" class="form-control{{ $errors->has('link') ? ' is-invalid' : '' }}" id="recipient-name" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add Link</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="addAd" tabindex="-1" role="dialog" aria-labelledby="addAdLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addAdLabel">New Ad</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="{{ route('ads.store') }}" method="POST">
+                <div class="modal-body">
+                    @csrf
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">Name:</label>
+                        <input type="url" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" id="recipient-name" required>
                     </div>
                 </div>
                 <div class="modal-footer">
