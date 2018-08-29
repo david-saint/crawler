@@ -58,7 +58,7 @@
                             {{ $ad->name }}
                             <div>
                                 <a href="/ads/{{ $ad->id }}/edit"><span class="badge badge-primary badge-pill"><i class="material-icons">edit</i></span></a>
-                                <form action="/ads/{{ $ad->slug }}" method="POST" id="delete-{{ $ad->id }}-ad">
+                                <form action="/ads/{{ $ad->id }}" method="POST" id="delete-{{ $ad->id }}-ad">
                                     @method('DELETE')
                                     @csrf
                                 </form>
@@ -112,21 +112,35 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('ads.store') }}" method="POST">
+            <form action="{{ route('ads.store') }}" method="POST" enctype="multipart/form-data">
                 <div class="modal-body">
                     @csrf
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">Name:</label>
-                        <input type="url" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" id="recipient-name" required>
+                        <input type="text" name="name" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" id="recipient-name" required>
+                         @if ($errors->has('name'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('name') }}</strong>
+                            </span>
+                        @endif
                     </div>
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputGroup" aria-describedby="inputGroupAddon">
-                            <label for="inputGroup" class="custom-file-label"></label>
-                        </div>
-                        <div class="input-group-append">
-                            <button class="btn btn-outline-secondary" type="button" id="inputGroupAddon">File</button>
-                        </div>
+                    <div class="form-group">
+                        <label for="url" class="col-form-label">Link it redirects to</label>
+                        <input type="url" name="url" class="form-control{{ $errors->has('url') ? ' is-invalid' : '' }}" id="url" required>
+                         @if ($errors->has('url'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('url') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+                    <div class="form-group">
+                        <label for="file" class="col-form-label">Image</label>
+                        <input type="file" class="form-control{{ $errors->has('image') ? ' is-invalid' : '' }}" id="file" name="image" required>
+                         @if ($errors->has('image'))
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $errors->first('image') }}</strong>
+                            </span>
+                        @endif
                     </div>
                 </div>
                 <div class="modal-footer">

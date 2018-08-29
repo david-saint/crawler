@@ -37,7 +37,27 @@ class AdController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'url' => 'required|url',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        $image = $request->file('image');
+
+        if (!$image)
+            return 'No Image';
+
+        // set the image name to something random
+        $image_name = rand(1000000, 9999999) . $image->getClientOriginalName();
+        // move the image to the images folder
+        $image->move('images', $image_name);
+        // create the path for the db
+        $image_path = "/images/$image_name";
+
+        $ad = Ad::create($request->all());
+
+        return redirect()->route('ads.index');
     }
 
     /**
@@ -57,9 +77,9 @@ class AdController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Ad $ad)
     {
-        //
+        return view('ads.edit', compact('ad'));
     }
 
     /**
@@ -69,9 +89,33 @@ class AdController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Ad $ad)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'url' => 'required|url',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+
+        $image = $request->file('image');
+
+        if (!$image)
+            return 'No Image';
+
+        // set the image name to something random
+        $image_name = rand(1000000, 9999999) . $image->getClientOriginalName();
+        // move the image to the images folder
+        $image->move('images', $image_name);
+        // create the path for the db
+        $image_path = "/images/$image_name";
+
+        $ad->name = $request->name;
+        $ad->url = $request->url;
+        $ad->image = $request->image;
+
+        $ad->save();
+
+        return redirect()->route('ads.index');
     }
 
     /**
@@ -80,8 +124,10 @@ class AdController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Ad $ad)
     {
-        //
+        $ad->delete();
+
+        return redirect()->back();
     }
 }
