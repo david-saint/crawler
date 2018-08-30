@@ -19,7 +19,11 @@ Route::get('/link', 'ContentController@processLink');
 
 Route::resource('/pages', 'PageController');
 
+Route::post('/pages/{page}/ads', 'PageController@addAd');
+
 Route::resource('/ads', 'AdController');
+
+Route::post('/autocomplete', 'AdController@autocomplete');
 
 Route::get('/f/{page}', 'ContentController@framePage');
 

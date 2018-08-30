@@ -29,6 +29,8 @@
                     <a href="{{ route('ads.index') }}">View More...</a>
                 </div>
             </div>
+            <br>
+            {{ $ads->links() }}
         </div>
     </div>
 </div>

@@ -130,4 +130,26 @@ class AdController extends Controller
 
         return redirect()->back();
     }
+
+
+    public function autocomplete(Request $request)
+    {
+        if ($request->query) {
+
+            $q = $request->get('query');
+
+            $data = Ad::search($q)->get();
+
+            $output = '<ul class="dropdown-menu" style="display: block; position: relative">';
+
+            foreach ($data as $row) {
+                $output .= '<li><a href="#" class="adid" data-adid="'. $row->id .'">'. $row->name .'</a></li>';
+            }
+
+            $output .= '</ul>';
+
+            return $output;
+        }
+    }
+
 }

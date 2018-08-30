@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Page;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\DB;
 
 class PageController extends Controller
 {
@@ -70,6 +71,8 @@ class PageController extends Controller
      */
     public function edit(Page $page)
     {
+        $page->load('ads');
+        
         return view('pages.edit', compact('page'));
     }
 
@@ -111,5 +114,18 @@ class PageController extends Controller
         $page->delete();
 
         return redirect()->back();
+    }
+
+    public function addAd(Request $request, Page $page)
+    {
+        $this->validate($request, [
+            'ad_id' => 'required|numeric'
+        ]);
+
+        DB::table('ad_page')->insert(
+            ['ad_id' => $request->get('ad_id'), 'page_id' => $page->id ]
+        );
+
+        return redirect("/pages/$page->slug/edit");
     }
 }

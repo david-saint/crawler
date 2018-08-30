@@ -25,4 +25,16 @@ class Ad extends Model
     {
     	return $this->belongsToMany('App\Page');
     }
+
+    /**
+     * Scope a query to only include active users.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  mixed $value 
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSearch($query, $value)
+    {
+        return $query->where('name', 'LIKE', "%$value%");
+    }
 }
